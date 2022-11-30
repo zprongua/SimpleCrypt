@@ -69,6 +69,7 @@ public class ROT13Test {
         String actual2 = cipher.decrypt(Q2);
         System.out.println(Q2);
         System.out.println(A2);
+
         // Then
         assertTrue(actual2.equals(A2));
     }
@@ -87,4 +88,18 @@ public class ROT13Test {
         assertTrue(actual.equals(Q1));
     }
 
+    @Test
+    public void caeserTest() {
+        Caesar caesar = new Caesar();
+
+        String Q1 = "ABCabcXYZxyz";
+        System.out.println(Q1);
+
+        String A1 = "DEFdefABCabc";
+        System.out.println(A1);
+
+        String actual = caesar.encrypt(Q1);
+
+        assertTrue(actual.equals(A1));
+    }
 }

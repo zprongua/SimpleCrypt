@@ -17,8 +17,7 @@ public class ROT13  {
 
 
     public String crypt(String text) throws UnsupportedOperationException {
-
-        return "";
+        return encrypt(text);
     }
 
     public String encrypt(String text) {
@@ -26,23 +25,27 @@ public class ROT13  {
     }
 
     public String decrypt(String text) {
-        return text;
+        return encrypt(text);
     }
 
     public static String rotate(String s, Character c) {
         int cf = String.valueOf(c).codePointAt(0);
-        int cs = 65;
-        if (String.valueOf(c).codePointAt(0) > 90) cs = 97;
-        int dif = cf-cs;
         char newChar;
         StringBuilder str = new StringBuilder();
         for (String p : s.split("")) {
-            if (p.codePointAt(0) > cs + dif - 1) newChar = (char) (p.codePointAt(0) - dif);
-            else newChar = (char) (p.codePointAt(0) + dif);
-            str.append(newChar);
+            int pc = p.codePointAt(0);
+            if (pc > 64 && pc <91 || pc > 96 && pc < 124) {
+                int cs = 65;
+                if (pc > 90) cs = 97;
+                int dif = cf - cs;
+                if (dif > 13) dif -= 32;
+                if (pc > (cs + dif - 1)) newChar = (char) (pc - dif);
+                else newChar = (char) (pc + dif);
+                str.append(newChar);
+            }
+            else str.append(p);
         }
-        System.out.println(str);
-        return str.toString();
+        return String.valueOf(str);
     }
 
 }
