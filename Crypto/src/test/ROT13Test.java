@@ -10,7 +10,6 @@ public class ROT13Test {
         // Given
         String s1 = "ABCDEF";
         String s2 = "ABCDEF";
-
         // When
         ROT13 cipher = new ROT13();
         String actual = cipher.rotate(s1, 'A');
