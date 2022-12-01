@@ -6,30 +6,32 @@ public class Caesar extends ROT13 {
 
     @Override
     public String encrypt(String text) {
-        return rotate(text, 3);
+        return rotate(text);
     }
 
     @Override
     public String decrypt(String text) {
-        return rotate(text, -3);
+        char newChar;
+        StringBuilder str = new StringBuilder();
+        for (String p : text.split("")) {
+            int pc = p.codePointAt(0);
+            if (pc > 64 && pc < 91 || pc > 96 && pc < 124) {
+                if (pc > 64 && pc < 68 || pc > 96 && pc < 100) newChar = (char) (pc + 23);
+                else newChar = (char) (pc - 3);
+                str.append(newChar);
+            } else str.append(p);
+        }
+        return String.valueOf(str);
     }
 
-    public static String rotate(String s, int i) {
+    public static String rotate(String s) {
         char newChar;
-        int dif = i;
-        int dif1;
-        if (dif > 0) dif1 = dif + 20;
-        else dif1 = dif - 20;
         StringBuilder str = new StringBuilder();
         for (String p : s.split("")) {
             int pc = p.codePointAt(0);
             if (pc > 64 && pc < 91 || pc > 96 && pc < 124) {
-                int cs = 65;
-                if (pc > 90) {
-                    cs = 97;
-                }
-                if (pc > 87 && pc < 91 || pc > 119 && pc < 123) newChar = (char) (pc - dif1);
-                else newChar = (char) (pc + dif);
+                if (pc > 87 && pc < 91 || pc > 119 && pc < 123) newChar = (char) (pc - 23);
+                else newChar = (char) (pc + 3);
                 str.append(newChar);
             } else str.append(p);
         }

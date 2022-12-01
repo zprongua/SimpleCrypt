@@ -74,7 +74,7 @@ public class ROT13Test {
         assertTrue(actual2.equals(A2));
     }
     @Test
-    public void cryptTest2() {
+    public void cryptTest2() throws Exception {
         // Given
         ROT13 cipher = new ROT13('a', 'n');
 
@@ -86,6 +86,9 @@ public class ROT13Test {
         System.out.println(actual);
         // Then
         assertTrue(actual.equals(Q1));
+
+        cipher.encryptFile("sonnet18.txt", "sonnet18.enc");
+        cipher.encryptFile("sonnet18.enc", "sonnet18-1.txt");
     }
 
     @Test
@@ -99,7 +102,30 @@ public class ROT13Test {
         System.out.println(A1);
 
         String actual = caesar.encrypt(Q1);
+        String actual1 = caesar.decrypt(actual);
+        System.out.println(actual);
+        System.out.println(actual1);
+
+        assertEquals(actual, A1);
+        assertEquals(actual1, Q1);
+    }
+
+    @Test
+    public void seventeenTest() {
+        Seventeen seventeen = new Seventeen();
+
+        String Q1 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuwvxyz";
+        System.out.println(Q1);
+
+        String A1 = "RSTUVWXYZABCDEFGHIJKLMNOPQrstuvwxyzabcdefghijklnmopq";
+        System.out.println(A1);
+
+        String actual = seventeen.encrypt(Q1);
+        String actual1 = seventeen.decrypt(actual);
+        System.out.println(actual);
+        System.out.println(actual1);
 
         assertTrue(actual.equals(A1));
+        assertEquals(actual1, Q1);
     }
 }

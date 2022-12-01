@@ -1,8 +1,6 @@
-import static java.lang.Character.isLowerCase;
-import static java.lang.Character.isUpperCase;
-import static java.lang.Character.toLowerCase;
+import java.io.*;
 
-public class ROT13  {
+public class ROT13 {
     Character charStart;
     Character charFinish;
 
@@ -34,7 +32,7 @@ public class ROT13  {
         StringBuilder str = new StringBuilder();
         for (String p : s.split("")) {
             int pc = p.codePointAt(0);
-            if (pc > 64 && pc <91 || pc > 96 && pc < 124) {
+            if (pc > 64 && pc < 91 || pc > 96 && pc < 124) {
                 int cs = 65;
                 if (pc > 90) cs = 97;
                 int dif = cf - cs;
@@ -42,10 +40,21 @@ public class ROT13  {
                 if (pc > (cs + dif - 1)) newChar = (char) (pc - dif);
                 else newChar = (char) (pc + dif);
                 str.append(newChar);
-            }
-            else str.append(p);
+            } else str.append(p);
         }
         return String.valueOf(str);
     }
 
+    public void encryptFile(String input, String output) throws Exception {
+        try (
+                BufferedReader br = new BufferedReader(new FileReader(input));
+                BufferedWriter bf = new BufferedWriter(new FileWriter(output));
+        ) {
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                bf.write(encrypt(line));
+                bf.newLine();
+            }
+        }
+    }
 }

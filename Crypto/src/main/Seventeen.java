@@ -6,30 +6,28 @@ public class Seventeen extends ROT13 {
 
     @Override
     public String encrypt(String text) {
-        return rotate(text, 17);
+        char newChar;
+        StringBuilder str = new StringBuilder();
+        for (String p : text.split("")) {
+            int pc = p.codePointAt(0);
+            if (pc > 64 && pc < 91 || pc > 96 && pc < 124) {
+                if (pc > 73 && pc < 91 || pc > 105 && pc < 123) newChar = (char) (pc - 9);
+                else newChar = (char) (pc + 17);
+                str.append(newChar);
+            } else str.append(p);
+        }
+        return String.valueOf(str);
     }
 
     @Override
     public String decrypt(String text) {
-        return rotate(text, -17);
-    }
-
-    public static String rotate(String s, int i) {
         char newChar;
-        int dif = i;
-        int dif1;
-        if (dif > 0) dif1 = (26 - dif);
-        else dif1 = -(26 - dif);
         StringBuilder str = new StringBuilder();
-        for (String p : s.split("")) {
+        for (String p : text.split("")) {
             int pc = p.codePointAt(0);
             if (pc > 64 && pc < 91 || pc > 96 && pc < 124) {
-                int cs = 65;
-                if (pc > 90) {
-                    cs = 97;
-                }
-                if (pc > 87 && pc < 91 || pc > 119 && pc < 123) newChar = (char) (pc - dif1);
-                else newChar = (char) (pc + dif);
+                if (pc > 64 && pc < 82 || pc > 96 && pc < 114) newChar = (char) (pc + 9);
+                else newChar = (char) (pc - 17);
                 str.append(newChar);
             } else str.append(p);
         }
